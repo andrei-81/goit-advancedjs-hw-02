@@ -16,3 +16,103 @@
 @import url('./badges.css');
 @import url('./back-link.css');
 @import url('./footer.css');
+ul {
+  list-style: none;
+  padding-left: 0;
+  margin: 0;
+}
+
+.gallery{
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  gap: 24px;
+  width: 1128px;
+  margin: 24px auto;
+}
+
+/* body {
+  min-width: 1440px;
+} */
+
+.gallery-item,
+.gallery-image {
+  height: 200px;
+  width: 360px;
+  object-fit: cover;
+  cursor: url('bxs_hand-down.png'), auto;
+}
+
+.modal-image {
+  display: block;
+  height: 640px;
+  width: 1112px;
+  object-fit: cover;
+}
+
+.modal {
+  display: flex;
+  flex-direction: row;
+  /* min-width: 1440px;
+  min-height: 696px; */
+  justify-content: center;
+}
+
+.feedback-form {
+  display: flex;
+  flex-direction: column;
+  width: 408px;
+  height: 296px;
+  margin-left: calc((100% - 408px)/2);
+  gap: 8px;
+  padding: 24px;
+}
+
+label {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+
+  font-family: Montserrat;
+  font-size: 16px;
+  font-weight: 400;
+  line-height: 24px;
+  letter-spacing: 0.04em;
+  text-align: left;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+  color: #2E2F42;
+  border-color: #808080;
+
+}
+
+label:hover {
+  border-color: #000000;
+}
+
+textarea {
+  height: 80px;
+}
+
+button {
+  font-family: Montserrat;
+  font-size: 16px;
+  font-weight: 500;
+  line-height: 24px;
+  letter-spacing: 0.04em;
+  text-align: center;
+  text-underline-position: from-font;
+  text-decoration-skip-ink: none;
+  color: #FFFFFF;
+  width: 96px;
+  height: 40px;
+  gap: 10px;
+  border-radius: 8px;
+  opacity: 0px;
+  background: #4E75FF;
+  border: 0;
+}
+
+button:hover {
+  background: #6C8CFF;
+}
