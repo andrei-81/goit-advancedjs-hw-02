@@ -69,7 +69,7 @@ button.addEventListener('click', function() {
     } else {
     for (const key in timerElements) {
       if (timerElements[key]) { 
-          timerElements[key].textContent = timeArray[key]
+          timerElements[key].textContent = timeArray[key].toString().padStart(2, '0')
       }
     }
   }
