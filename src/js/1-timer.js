@@ -52,15 +52,16 @@ const dataPick = flatpickr(dataSelector, options)
 button.addEventListener('click', function() {
   button.disabled = true
   clearInterval(intervalId)
-  if(Date.now() >= dateInPicker) {
+  const fixedDate = dateInPicker
+  if(Date.now() >= fixedDate) {
     iziToast.error({
       title: 'Wrong date',
       message: 'Please choose a date in the future'})
       return
   }
   intervalId = setInterval(() => {
-    const timeArray = convertMs(dateInPicker - Date.now())
-    if (Date.now() >= dateInPicker) {
+    const timeArray = convertMs(fixedDate - Date.now())
+    if (Date.now() >= fixedDate) {
       clearInterval(intervalId)
       iziToast.success({
         title: 'Done',
