@@ -8,9 +8,9 @@ const makePromise = ({ delay, shouldResolve = true }) => {
   return new Promise((resolve, reject) => {
     setTimeout(() => {
 			if(shouldResolve) {
-				resolve(`✅ Fulfilled promise in ${delay}ms`)
+        resolve(delay)
 			} else {
-				reject(`❌ Rejected promise in ${delay}ms`)
+        reject(delay)
 			}
 		}, delay);
   });
@@ -32,8 +32,7 @@ form.addEventListener('submit', (event) => {
 
   makePromise({ delay, shouldResolve })
     .then(result => iziToast.success({
-      message: result}))
+      message: `✅ Fulfilled promise in ${delay}ms`}))
     .catch(error => iziToast.error({
-      message: error}))
-    // form.reset()
+      message: `❌ Rejected promise in ${delay}ms`}))
 })

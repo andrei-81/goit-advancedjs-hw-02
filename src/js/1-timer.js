@@ -10,22 +10,34 @@ const options = {
     defaultDate: new Date(),
     minuteIncrement: 1,
     onClose(selectedDates, instance) {
-      dateInPicker = selectedDates[0].getTime()
+      const dateInPicker = selectedDates[0].getTime()
+      const now = new Date();
       button.disabled = false
+      if (dateInPicker <= now) {
+        iziToast.error({
+          title: 'Error',
+          message: 'Please select a future date and time.',
+        });
+        button.disabled = true;
+      } else {
+        button.disabled = false;
+      }
     },
 };
 
-var dateInPicker = Date.now()
 const dataSelector = document.querySelector("#datetime-picker")
-const timerElement = document.querySelector('.value');
+const button = document.querySelector('[data-start]');
+let intervalId = null
+button.disabled = true;
+
+const dataPick = flatpickr(dataSelector, options)
+
 const timerElements = {
   days: document.querySelector('[data-days]'),
   hours: document.querySelector('[data-hours]'),
   minutes: document.querySelector('[data-minutes]'),
   seconds: document.querySelector('[data-seconds]'),
 };
-const button = document.querySelector('[data-start]');
-let intervalId = null
 
 function convertMs(ms) {
   // Number of milliseconds per unit of time
@@ -46,33 +58,30 @@ function convertMs(ms) {
   return { days, hours, minutes, seconds }
 }
 
-
-const dataPick = flatpickr(dataSelector, options)
-
 button.addEventListener('click', function() {
-  button.disabled = true
-  clearInterval(intervalId)
-  const fixedDate = dateInPicker
-  if(Date.now() >= fixedDate) {
-    iziToast.error({
-      title: 'Wrong date',
-      message: 'Please choose a date in the future'})
-      return
-  }
-  intervalId = setInterval(() => {
-    const timeArray = convertMs(fixedDate - Date.now())
-    if (Date.now() >= fixedDate) {
-      clearInterval(intervalId)
-      iziToast.success({
-        title: 'Done',
-        message: 'Time!'})
-    } else {
-    for (const key in timerElements) {
-      if (timerElements[key]) { 
-          timerElements[key].textContent = timeArray[key].toString().padStart(2, '0')
+  const selectedDate = new Date(dataSelector.value);
+  if(Date.now() < selectedDate) {
+    dataSelector.disabled = true;
+    button.disabled = true;
+    intervalId = setInterval(() => {
+      const currentTime = new Date();
+      const timeDifference = selectedDate - currentTime;
+      if (timeDifference <= 0) {
+        clearInterval(intervalId);
+        iziToast.success({
+          title: 'Timer Finished',
+          message: 'The countdown has ended.',
+        });
+        dataSelector.disabled = false;
+        button.disabled = false;
+      } else {
+        const timeArray = convertMs(timeDifference)
+        for (const key in timerElements) {
+          if (timerElements[key]) { 
+            timerElements[key].textContent = timeArray[key].toString().padStart(2, '0')
+          }
+        }
       }
-    }
+    }, 1000);
   }
-  }, 1000)
-
 })
