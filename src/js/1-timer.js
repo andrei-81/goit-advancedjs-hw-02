@@ -73,7 +73,6 @@ button.addEventListener('click', function() {
           message: 'The countdown has ended.',
         });
         dataSelector.disabled = false;
-        button.disabled = false;
       } else {
         const timeArray = convertMs(timeDifference)
         for (const key in timerElements) {
